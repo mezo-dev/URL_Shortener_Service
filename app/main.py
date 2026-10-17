@@ -7,8 +7,8 @@ Base.metadata.create_all(engine)
 
 app = FastAPI(
     title="URL Shortener",
-    version=0.1,
-    description="A URL Shortener API Service that gives you a short version of your long URL.",
+    version="0.1",
+    description="Shorten long URLs and redirect visitors to the original.",
 )
 
 
