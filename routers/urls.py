@@ -5,7 +5,7 @@ from app.database import get_db
 from app.schemas import URLCreate, URLResponse
 from services.url_service import URLService
 
-router = APIRouter(prefix="api/v1/urls", tags=["URLs"])
+router = APIRouter(prefix="/api/v1/urls", tags=["URLs"])
 
 
 @router.post("", response_model=URLResponse, status_code=status.HTTP_201_CREATED)
