@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Depends, Request, status
+from fastapi import APIRouter, Depends, HTTPException, Request, status
+from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
 
 from app.database import get_db
@@ -23,4 +24,21 @@ def create_short_url_view(
         original_url=url_record.original_url,
         short_code=url_record.short_code,
         short_url=short_url,
+    )
+
+
+redirect_router = APIRouter(tags=["Redirects"])
+
+
+@redirect_router.get("/{short_code}")
+def redirect_to_original_url(short_code: str, db: Session = Depends(get_db)):
+    url_record = URLService.get_url_by_code(short_code)
+
+    if url_record is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Short URL not found."
+        )
+
+    return RedirectResponse(
+        url=url_record.original_url, status_code=status.HTTP_307_TEMPORARY_REDIRECT
     )
