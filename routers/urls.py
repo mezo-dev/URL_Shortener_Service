@@ -32,7 +32,7 @@ redirect_router = APIRouter(tags=["Redirects"])
 
 @redirect_router.get("/{short_code}")
 def redirect_to_original_url(short_code: str, db: Session = Depends(get_db)):
-    url_record = URLService.get_url_by_code(short_code)
+    url_record = URLService.get_url_by_code(db=db, short_code=short_code)
 
     if url_record is None:
         raise HTTPException(
