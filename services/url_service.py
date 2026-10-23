@@ -32,3 +32,7 @@ class URLService:
                 db.rollback()
 
         raise RuntimeError("Could not generate a unique short code.")
+
+    @staticmethod
+    def get_url_by_code(db: Session, short_code: str) -> URL | None:
+        return db.query(URL).filter(URL.short_code == short_code).first()
