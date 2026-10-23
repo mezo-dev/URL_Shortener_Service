@@ -14,7 +14,7 @@ class URLService:
         return "".join(secrets.choice(URLService.ALPHABET) for _ in range(length))
 
     @staticmethod
-    def create_short_url(db: Session, original_url: str) -> URL:
+    def create_short_url(*, db: Session, original_url: str) -> URL:
         attempts = 5
 
         for _ in range(attempts):
